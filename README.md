@@ -4,12 +4,12 @@
 
 ---
 
-##Udacity Flying Car Nanodegree  - 3D Motion Planning
+## Udacity Flying Car Nanodegree  - 3D Motion Planning
 
 
 # Implementation overview
 
-##This prooject contains 2 implementations:
+## This prooject contains 2 implementations:
 1. Base project with `TODO:` tasks completion. Code: [motion_planning.py](./motion_planning.py), [planning_utils.py] (./planning_utils.py)
 	Run command example: 
     ```
