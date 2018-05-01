@@ -26,7 +26,7 @@ class States(Enum):
 
 class MotionPlanning(Drone):
 
-    def __init__(self, connection, goal_glbal_position_param):
+    def __init__(self, connection, goal_global_position_param):
         super().__init__(connection)
 
         self.target_position = np.array([0.0, 0.0, 0.0])
@@ -35,7 +35,7 @@ class MotionPlanning(Drone):
         self.check_state = {}
 
         # Goal global position
-        self._goal_global_position = goal_glbal_position_param
+        self._goal_global_position = goal_global_position_param
 
         # initial state
         self.flight_state = States.MANUAL
@@ -218,7 +218,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     print("Goal global position lon={0} lat={1} alt={2}".format(args.goal[0], args.goal[1], args.goal[2]))
     conn = MavlinkConnection('tcp:{0}:{1}'.format(args.host, args.port), timeout=60)
-    drone = MotionPlanning(conn, (args.goal[0], args.goal[1], args.goal[2]))
+    drone = MotionPlanning(conn, goal_global_position_param =(args.goal[0], args.goal[1], args.goal[2]))
     time.sleep(1)
 
     drone.start()

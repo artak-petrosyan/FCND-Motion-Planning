@@ -28,7 +28,7 @@ class States(Enum):
 
 class MotionPlanning(Drone):
 
-    def __init__(self, connection, goal_glbal_position_param):
+    def __init__(self, connection, goal_global_position_param):
         super().__init__(connection)
 
         self.target_position = np.array([0.0, 0.0, 0.0])
@@ -37,7 +37,7 @@ class MotionPlanning(Drone):
         self.check_state = {}
 
         # Goal global position
-        self._goal_global_position = goal_glbal_position_param
+        self._goal_global_position = goal_global_position_param
 
         # initial state
         self.flight_state = States.MANUAL
@@ -173,16 +173,15 @@ class MotionPlanning(Drone):
         #print(edges)
         graph = create_graph(edges)
         print(graph)
-        # Define starting point on the grid (this is just grid center)
-        grid_start = (-north_offset, -east_offset)
         
 
         # TODO: convert start position to current position rather than map center
         grid_start = (int(np.ceil(local_pos[0] - north_offset)), int(np.ceil(local_pos[1] - east_offset)))
         graph_start = closest_point(graph, grid_start)
         # Set goal as some arbitrary position on the grid
-        grid_goal = (-north_offset + 10, -east_offset + 10)
+        
         # TODO: adapt to set goal as latitude / longitude position and convert
+        print(self.goal_global_position)
         local_goal = global_to_local(self.goal_global_position, self.global_home)
         grid_goal = (int(np.ceil(local_goal[0] - north_offset)), int(np.ceil(local_goal[1] - east_offset)))
         graph_goal = closest_point(graph, grid_goal)

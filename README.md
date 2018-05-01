@@ -4,25 +4,26 @@
 
 ---
 
-###Udacity Flying Car Nanodegree  - 3D Motion Planning
+##Udacity Flying Car Nanodegree  - 3D Motion Planning
+
 
 # Implementation overview
-###This prooject contains 2 implementations:
-1. Base project with `TODO:` tasks completion (`motion_planning.py`, `planning_utils.py` )
-2. Discretize the environment into a grid or graph representation.
+
+##This prooject contains 2 implementations:
+1. Base project with `TODO:` tasks completion. Code: [motion_planning.py](./motion_planning.py), [planning_utils.py] (./planning_utils.py)
+	Run command example: 
+    ```
+    $>python motion_planning.py --goal 37.796751 -122.401289 0.0
+    ```
+    Command line argument `--goal`is a goal global coordinates (longitude, latitude, altitude), i.e. '37.796751 -122.401289 0.0'
+2. Graph-based path planning imlemetation by using approaches explained in the Lesson 7:From Grids to Graphs Discretize the environment into a grid or graph representation.
+    Run command example: 
+    ```
+    $>python motion_planning_graph_imp.py --goal 37.796751 -122.401289 0.0
+    ```
 
 
-## [Rubric](https://review.udacity.com/#!/rubrics/1534/view) Points
-### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
-
----
-### Writeup / README
-
-#### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  
-
-You're reading it! Below I describe how I addressed each rubric point and where in my code each point is handled.
-
-### Explain the Starter Code
+## [Rubric](https://review.udacity.com/#!/rubrics/1534/view) Points Implemetation
 
 #### 1. Explain the functionality of what's provided in `motion_planning.py` and `planning_utils.py`
 These scripts contain a basic planning implementation that includes...
