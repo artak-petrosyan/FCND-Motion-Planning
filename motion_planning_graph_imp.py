@@ -5,13 +5,15 @@ from enum import Enum, auto
 
 import numpy as np
 
-from planning_utils import a_star, heuristic, create_grid, prune_path
+from planning_utils_graph_imp import a_star, heuristic, closest_point, prune_path, create_grid_and_edges, create_graph
 from udacidrone import Drone
 from udacidrone.connection import MavlinkConnection
 from udacidrone.messaging import MsgID
 from udacidrone.frame_utils import global_to_local
 
 from io import StringIO
+
+import matplotlib.pyplot as plt
 
 
 class States(Enum):
@@ -129,11 +131,12 @@ class MotionPlanning(Drone):
         data = msgpack.dumps(self.waypoints)
         self.connection._master.write(data)
 
+    
     def plan_path(self):
         self.flight_state = States.PLANNING
         print("Searching for a path ...")
         TARGET_ALTITUDE = 5
-        SAFETY_DISTANCE = 5
+        SAFETY_DISTANCE = 3
 
         self.target_position[2] = TARGET_ALTITUDE
 
@@ -165,31 +168,38 @@ class MotionPlanning(Drone):
         data = np.loadtxt('colliders.csv', delimiter=',', dtype='Float64', skiprows=2)
         
         # Define a grid for a particular altitude and safety margin around obstacles
-        grid, north_offset, east_offset = create_grid(data, TARGET_ALTITUDE, SAFETY_DISTANCE)
+        grid, edges, north_offset, east_offset = create_grid_and_edges(data, TARGET_ALTITUDE, SAFETY_DISTANCE)
         print("North offset = {0}, east offset = {1}".format(north_offset, east_offset))
-
+        #print(edges)
+        graph = create_graph(edges)
+        print(graph)
         # Define starting point on the grid (this is just grid center)
         grid_start = (-north_offset, -east_offset)
+        
 
         # TODO: convert start position to current position rather than map center
         grid_start = (int(np.ceil(local_pos[0] - north_offset)), int(np.ceil(local_pos[1] - east_offset)))
-
+        graph_start = closest_point(graph, grid_start)
         # Set goal as some arbitrary position on the grid
         grid_goal = (-north_offset + 10, -east_offset + 10)
         # TODO: adapt to set goal as latitude / longitude position and convert
         local_goal = global_to_local(self.goal_global_position, self.global_home)
         grid_goal = (int(np.ceil(local_goal[0] - north_offset)), int(np.ceil(local_goal[1] - east_offset)))
+        graph_goal = closest_point(graph, grid_goal)
         # Run A* to find a path from start to goal
         # TODO: add diagonal motions with a cost of sqrt(2) to your A* implementation
         # or move to a different search space such as a graph (not done here)
-        print('Local Start and Goal: ', grid_start, grid_goal)
-        path, _ = a_star(grid, heuristic, grid_start, grid_goal)
+        print('Graph Start and Goal: ', graph_start, graph_goal)
+        
+        path, _ = a_star(graph, heuristic, graph_start, graph_goal)
+        path.append(grid_goal)
         # TODO: prune path to minimize number of waypoints
         # TODO (if you're feeling ambitious): Try a different approach altogether!
         path  = prune_path(path)
+        print(path)
         print('=====================================================')
         # Convert path to waypoints
-        waypoints = [[p[0] + north_offset, p[1] + east_offset, TARGET_ALTITUDE, 0] for p in path]
+        waypoints = [[int(p[0] + north_offset), int(p[1] + east_offset), TARGET_ALTITUDE, 0] for p in path]
         print(waypoints)
         print('=====================================================')
         # Set self.waypoints
