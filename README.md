@@ -43,7 +43,8 @@
 
 #### 1. Bellow is a code snippet from the implemetation script which loads global home position from the first line of the csv file:
 ```Python
-		# TODO: read lat0, lon0 from colliders into floating point values
+		
+        # TODO: read lat0, lon0 from colliders into floating point values
         lat0 = None
         lon0 = None
         with open('colliders.csv') as f:
@@ -63,6 +64,7 @@
 #### 2. Setting a current local position
 Base class Drone has properties for global positioning which supposes to be updated by the GPS
 ```Python
+    
     # Global position in degrees (int)
     # Altitude is in meters
     self._longitude = 0
@@ -82,7 +84,8 @@ Here is the implementation line from the code:
 #### 3. Setting grid start position from local position
 There is a utility method `global_to_local` provided by Udacity Drone package. Grid start position is relative to the offset.
 ```Python
-	local_pos = global_to_local(global_pos, self.global_home)
+	
+    local_pos = global_to_local(global_pos, self.global_home)
     
     grid_start = (int(np.ceil(local_pos[0] - north_offset)), int(np.ceil(local_pos[1] - east_offset)))
 ```
@@ -93,6 +96,7 @@ For ability to set arbitrary global position as a mission goal I have added publ
 #### 5. Adding diagonal motion 
 `Action` enum in the [planning_utils.py](./planning_utils_graph_imp.py) defines all possible action considered in the A*. So I have extended this enum as followed:
 ```Python
+
 	WEST = (0, -1, 1)
     EAST = (0, 1, 1)
     NORTH = (-1, 0, 1)
@@ -111,9 +115,9 @@ For waypoints culling I have implemented 2 methods `prune_path` and  `collineari
 
 
 ### Execution
- ```
+```
     $>python motion_planning.py --goal -122.401289 37.796751 0.0
-    ```
+```
 
 # Extra Challenge: Real World Planning by using Graph
 
