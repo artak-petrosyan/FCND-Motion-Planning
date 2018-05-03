@@ -223,7 +223,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--port', type=int, default=5760, help='Port number')
     parser.add_argument('--host', type=str, default='127.0.0.1', help="host address, i.e. '127.0.0.1'")
-    parser.add_argument('-g', '--goal', nargs='*', type=float,  default=[37.796751, -122.401289, 0.0], help="Goal global coordinates (longitude, latitude, altitude), i.e. '37.796751 -122.401289 0.0'")
+    parser.add_argument('-g', '--goal', nargs='*', type=float,  default=[-122.401289, 37.796751, 0.0], help="Goal global coordinates (longitude, latitude, altitude), i.e. '-122.401289 37.796751 0.0'")
     args = parser.parse_args()
     print("Goal global position lon={0} lat={1} alt={2}".format(args.goal[0], args.goal[1], args.goal[2]))
     conn = MavlinkConnection('tcp:{0}:{1}'.format(args.host, args.port), timeout=60)
