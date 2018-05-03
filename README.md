@@ -125,4 +125,4 @@ Path computation first creates Voronoi diagram by using obstacles middle points 
 A* traverses this graph for finding path from the start node to destination node which are the closest to the start and goal location ppoints accordingly.
 
 Here is the video fragment captured from the Simulator screen:
-[Video](./misc/FCND-Simulator 4_30_2018 7_34_33 PM.mp4)
+[FCND-Simulator 4_30_2018 7_34_33 PM.mp4](./misc/FCND-Simulator 4_30_2018 7_34_33 PM.mp4)
