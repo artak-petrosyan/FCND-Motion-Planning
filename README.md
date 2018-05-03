@@ -96,16 +96,15 @@ For ability to set arbitrary global position as a mission goal I have added publ
 #### 5. Adding diagonal motion 
 `Action` enum in the [planning_utils.py](./planning_utils_graph_imp.py) defines all possible action considered in the A*. So I have extended this enum as followed:
 ```Python
-
-	WEST = (0, -1, 1)
-    EAST = (0, 1, 1)
-    NORTH = (-1, 0, 1)
-    SOUTH = (1, 0, 1)
-    # Diagonal motions
-    NORTHWEST = (-1, -1, np.sqrt(2))
-    NORTHEAST = (-1, 1, np.sqrt(2))
-    SOUTHWEST = (1, -1, np.sqrt(2))
-    SOUTHEAST = (1, 1, np.sqrt(2))
+  WEST = (0, -1, 1)
+  EAST = (0, 1, 1)
+  NORTH = (-1, 0, 1)
+  SOUTH = (1, 0, 1)
+  # Diagonal motions
+  NORTHWEST = (-1, -1, np.sqrt(2))
+  NORTHEAST = (-1, 1, np.sqrt(2))
+  SOUTHWEST = (1, -1, np.sqrt(2))
+  SOUTHEAST = (1, 1, np.sqrt(2))
 ```
 Diagonal actions weight was set to sqrt(2) since direct ortogonal actions weight is 1. Also I had to modify `valid_actions` method for checking and using this additional moves realtive to the current position in the grid.
 
@@ -126,4 +125,4 @@ Path computation first creates Voronoi diagram by using obstacles middle points 
 A* traverses this graph for finding path from the start node to destination node which are the closest to the start and goal location ppoints accordingly.
 
 Here is the video fragment captured from the Simulator screen:
-![Quad Video](./misc/FCND-Simulator 4_30_2018 7_34_33 PM.mp4)
+[Video](./misc/FCND-Simulator 4_30_2018 7_34_33 PM.mp4)
